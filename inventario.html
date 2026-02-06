@@ -130,6 +130,38 @@
         gap: 12px;
         grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       }
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 10;
+      }
+      .modal-card {
+        position: fixed;
+        z-index: 11;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(420px, 92vw);
+        background: linear-gradient(180deg, #162b28, #0f1b1a);
+        border: 1px solid #2b4a45;
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      }
+      .modal-card h3 {
+        margin: 0 0 6px 0;
+        font-size: 18px;
+      }
+      .modal-card p {
+        margin: 0 0 14px 0;
+        color: var(--muted);
+      }
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
       footer {
         padding: 0 24px 24px 24px;
         color: var(--muted);
@@ -161,7 +193,7 @@
           <button class="primary" id="addRow">Adicionar item</button>
           <button class="secondary" id="duplicateRow">Duplicar selecionado</button>
           <button class="danger" id="removeRow">Remover selecionado</button>
-          <button id="exportCsv">Exportar CSV</button>
+          <button id="importFile">Importar CSV/XLSX</button>
           <button id="downloadTemplate">Baixar modelo</button>
           <button id="launchExe">Rodar executável</button>
         </div>
@@ -224,14 +256,34 @@
       Este arquivo é local e não envia dados para servidores. Exportações são geradas no seu navegador.
     </footer>
 
+    <input type="file" id="filePicker" accept=".csv,.xlsx" style="display: none" />
+    <div id="importModal" style="display: none">
+      <div class="modal-backdrop"></div>
+      <div class="modal-card">
+        <h3>Importar inventário</h3>
+        <p>Escolha o formato do arquivo gerado pelo executável.</p>
+        <div class="modal-actions">
+          <button class="secondary" id="importCsvBtn">CSV</button>
+          <button class="secondary" id="importXlsxBtn">XLSX</button>
+          <button class="danger" id="cancelImportBtn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
     <script>
       const tableBody = document.querySelector("#inventoryTable tbody");
       const addRowBtn = document.querySelector("#addRow");
       const duplicateRowBtn = document.querySelector("#duplicateRow");
       const removeRowBtn = document.querySelector("#removeRow");
-      const exportBtn = document.querySelector("#exportCsv");
+      const importBtn = document.querySelector("#importFile");
       const downloadBtn = document.querySelector("#downloadTemplate");
       const launchBtn = document.querySelector("#launchExe");
+      const filePicker = document.querySelector("#filePicker");
+      const importModal = document.querySelector("#importModal");
+      const importCsvBtn = document.querySelector("#importCsvBtn");
+      const importXlsxBtn = document.querySelector("#importXlsxBtn");
+      const cancelImportBtn = document.querySelector("#cancelImportBtn");
 
       const counters = {
         active: document.querySelector("#countActive"),
@@ -324,6 +376,49 @@
         URL.revokeObjectURL(url);
       }
 
+      function exportXlsx() {
+        const headers = Array.from(document.querySelectorAll("thead th")).map((th) => th.textContent);
+        const rows = Array.from(tableBody.children).map((row) => getRowValues(row));
+        const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "InventarioTI");
+        XLSX.writeFile(workbook, "inventario-ti-iatf.xlsx");
+      }
+
+      function clearTable() {
+        tableBody.innerHTML = "";
+      }
+
+      function importFromCsv(text) {
+        const lines = text.trim().split(/\r?\n/);
+        if (lines.length === 0) return;
+        const dataLines = lines.slice(1);
+        clearTable();
+        dataLines.forEach((line) => {
+          const values = line
+            .split(";")
+            .map((value) => value.replace(/^"|"$/g, "").replace(/""/g, '"'));
+          if (values.length > 0 && values.some((v) => v.trim() !== "")) {
+            const rowValues = defaultRow().map((fallback, idx) => values[idx] ?? fallback);
+            addRow(rowValues);
+          }
+        });
+      }
+
+      function importFromXlsx(arrayBuffer) {
+        const workbook = XLSX.read(arrayBuffer, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        const rows = data.slice(1);
+        clearTable();
+        rows.forEach((row) => {
+          if (row.length === 0) return;
+          const rowValues = defaultRow().map((fallback, idx) => row[idx] ?? fallback);
+          addRow(rowValues);
+        });
+      }
+
       function downloadTemplate() {
         if (tableBody.children.length === 0) {
           addRow();
@@ -364,15 +459,59 @@
         selectedRow = null;
         updateCounters();
       });
-      exportBtn.addEventListener("click", exportCsv);
       downloadBtn.addEventListener("click", downloadTemplate);
+      importBtn.addEventListener("click", () => filePicker.click());
+      filePicker.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const extension = file.name.toLowerCase().split(".").pop();
+        if (extension === "csv") {
+          const reader = new FileReader();
+          reader.onload = () => importFromCsv(reader.result);
+          reader.readAsText(file, "utf-8");
+        } else if (extension === "xlsx") {
+          const reader = new FileReader();
+          reader.onload = () => importFromXlsx(reader.result);
+          reader.readAsArrayBuffer(file);
+        }
+        filePicker.value = "";
+      });
 
       launchBtn.addEventListener("click", () => {
+        if (window.app && typeof window.app.runExecutable === "function") {
+          window.app.runExecutable();
+          openImportModal();
+          return;
+        }
         alert(
-          "Para rodar um executável local, é necessário um pequeno aplicativo (ou extensão) fora do navegador. " +
-            "Se você quiser, posso criar um botão que chama um executável via um app local."
+          "Este botão funciona no aplicativo Electron. No navegador, não é possível executar um .exe local."
         );
       });
+
+      function openImportModal() {
+        importModal.style.display = "block";
+      }
+
+      function closeImportModal() {
+        importModal.style.display = "none";
+      }
+
+      function openFilePicker(accept) {
+        filePicker.accept = accept;
+        filePicker.click();
+      }
+
+      importCsvBtn.addEventListener("click", () => {
+        closeImportModal();
+        openFilePicker(".csv");
+      });
+
+      importXlsxBtn.addEventListener("click", () => {
+        closeImportModal();
+        openFilePicker(".xlsx");
+      });
+
+      cancelImportBtn.addEventListener("click", closeImportModal);
 
       tableBody.addEventListener("input", updateCounters);
 

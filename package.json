@@ -1,0 +1,14 @@
+{
+  "name": "inventario-ti-iatf",
+  "version": "1.0.0",
+  "description": "Inventário de TI com planilha IATF e execução automática de executável.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-packager . InventarioTI --overwrite --platform=win32 --arch=x64"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-packager": "^17.1.2"
+  }
+}
