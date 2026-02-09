@@ -130,6 +130,75 @@
         gap: 12px;
         grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       }
+
+      .report-header {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .report-meta {
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .report-table {
+        margin-top: 10px;
+        border: 1px solid #27433f;
+      }
+      .report-table th {
+        background: linear-gradient(90deg, #a9b2bf, #c1c8d2);
+        color: #0f1413;
+        text-transform: none;
+        font-size: 14px;
+      }
+      .report-table td.label {
+        width: 35%;
+        background: rgba(255, 255, 255, 0.05);
+        font-weight: 600;
+      }
+      .audit-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(226, 176, 74, 0.12);
+        color: var(--accent);
+        border: 1px solid rgba(226, 176, 74, 0.4);
+      }
+      .audit-table th {
+        background: linear-gradient(90deg, #d6dbe2, #edf0f5);
+        color: #0f1413;
+        text-transform: none;
+        font-size: 13px;
+      }
+      .audit-table td {
+        vertical-align: top;
+      }
+      .audit-table td.section {
+        background: rgba(255, 255, 255, 0.07);
+        font-weight: 700;
+        color: #e6ecf2;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .report-table td input {
+        background: #0d1615;
+      }
+      .report-grid {
+        display: grid;
+        gap: 14px;
+      }
+      .report-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 8px;
+      }
+      .table-scroll {
+        overflow-x: auto;
+      }
       .modal-backdrop {
         position: fixed;
         inset: 0;
@@ -225,30 +294,151 @@
       </section>
 
       <section class="panel">
-        <h2>Planilha de inventário</h2>
-        <div class="hint">
-          Campos principais do modelo IATF: identificação, classificação, criticidade,
-          responsáveis, localização, última revisão e status.
+        <div class="report-header">
+          <h2>Auditoria IATF do dispositivo <span id="reportMachineName">CMSBCTI10</span></h2>
+          <div class="report-meta">
+            Gerado em <span id="reportGeneratedAt">--</span>
+            <span class="audit-badge">Formato de auditoria</span>
+          </div>
         </div>
-        <table id="inventoryTable">
-          <thead>
-            <tr>
-              <th>Ativo / Equipamento</th>
-              <th>Código Patrimônio</th>
-              <th>Categoria</th>
-              <th>Criticidade</th>
-              <th>Localização</th>
-              <th>Responsável</th>
-              <th>Fornecedor</th>
-              <th>Modelo / Série</th>
-              <th>Versão / SO</th>
-              <th>Última Revisão</th>
-              <th>Status</th>
-              <th>Observações</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="report-actions">
+          <button class="secondary" id="refreshReportDate">Atualizar data/hora</button>
+          <button class="secondary" id="addNetworkRow">Adicionar interface</button>
+        </div>
+        <div class="report-grid">
+          <table class="report-table audit-table">
+            <thead>
+              <tr>
+                <th style="width: 28%">Item auditado</th>
+                <th>Evidência / Valor</th>
+                <th style="width: 12%">Conformidade</th>
+                <th style="width: 25%">Observações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="section" colspan="4">Identificação do dispositivo</td>
+              </tr>
+              <tr>
+                <td class="label">Hostname</td>
+                <td><input id="reportHostname" value="CMSBCTI10" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Usuário</td>
+                <td><input value="matheus.infradb" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Domínio</td>
+                <td><input value="GRUPOLCLOG" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">SO</td>
+                <td><input value="Microsoft Windows 10 Pro Service Pack 0" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Versão do SO</td>
+                <td><input value="10.0.19045" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Data de Instalação</td>
+                <td><input value="28/11/2024 09:46:53" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Uptime</td>
+                <td><input value="0 dia(s)" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Fabricante</td>
+                <td><input value="Dell Inc" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Modelo</td>
+                <td><input value="Inspiron 5566" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="section" colspan="4">Placa-mãe</td>
+              </tr>
+              <tr>
+                <td class="label">Fabricante</td>
+                <td><input value="Dell Inc" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Modelo</td>
+                <td><input value="N/A" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Produto</td>
+                <td><input value="0P1MTV" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">Serial</td>
+                <td><input value="/JJJXVC2/BR108197530033/" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+              <tr>
+                <td class="label">SKU</td>
+                <td><input value="N/A" /></td>
+                <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                <td><input placeholder="Evidência ou ação requerida" /></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="table-scroll">
+            <table class="report-table audit-table" id="networkTable">
+              <thead>
+                <tr>
+                  <th colspan="7">Configurações de Rede (Evidência de conectividade)</th>
+                </tr>
+                <tr>
+                  <th>IP</th>
+                  <th>M?scara de Subrede</th>
+                  <th>Gateway</th>
+                  <th>DNS</th>
+                  <th>MAC</th>
+                  <th>Conformidade</th>
+                  <th>Observações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input value="192.168.11.140" /></td>
+                  <td><input value="255.255.255.0" /></td>
+                  <td><input value="192.168.11.15" /></td>
+                  <td><input value="192.168.11.20 | 192.168.0.20 | 10.100.86.47" /></td>
+                  <td><input value="B0:52:16:F5:CC:9D" /></td>
+                  <td><select><option>Conforme</option><option>Não Conforme</option><option>NA</option></select></td>
+                  <td><input placeholder="Evidência ou ação requerida" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -294,199 +484,204 @@
 
       let selectedRow = null;
 
-      const defaultRow = () => [
-        "",
-        "",
-        "Hardware",
-        "Média",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "Ativo",
-        "",
-      ];
+      if (tableBody) {
+        const defaultRow = () => [
+          "",
+          "",
+          "Hardware",
+          "Média",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Ativo",
+          "",
+        ];
 
-      const categories = ["Hardware", "Software", "Rede", "Serviço", "Outro"];
-      const criticality = ["Baixa", "Média", "Alta", "Crítica"];
-      const statuses = ["Ativo", "Em uso", "Em manutenção", "Desativado", "Descartado"];
+        const categories = ["Hardware", "Software", "Rede", "Serviço", "Outro"];
+        const criticality = ["Baixa", "Média", "Alta", "Crítica"];
+        const statuses = ["Ativo", "Em uso", "Em manutenção", "Desativado", "Descartado"];
 
-      function buildSelect(options, value) {
-        const select = document.createElement("select");
-        options.forEach((option) => {
-          const opt = document.createElement("option");
-          opt.value = option;
-          opt.textContent = option;
-          if (option === value) opt.selected = true;
-          select.appendChild(opt);
-        });
-        return select;
-      }
+        function buildSelect(options, value) {
+          const select = document.createElement("select");
+          options.forEach((option) => {
+            const opt = document.createElement("option");
+            opt.value = option;
+            opt.textContent = option;
+            if (option === value) opt.selected = true;
+            select.appendChild(opt);
+          });
+          return select;
+        }
 
-      function addRow(values = defaultRow()) {
-        const row = document.createElement("tr");
-        row.addEventListener("click", () => {
-          document.querySelectorAll("tbody tr").forEach((r) => r.classList.remove("selected"));
-          row.classList.add("selected");
-          selectedRow = row;
-        });
+        function addRow(values = defaultRow()) {
+          const row = document.createElement("tr");
+          row.addEventListener("click", () => {
+            document.querySelectorAll("tbody tr").forEach((r) => r.classList.remove("selected"));
+            row.classList.add("selected");
+            selectedRow = row;
+          });
 
-        values.forEach((value, index) => {
-          const cell = document.createElement("td");
-          if (index === 2) {
-            cell.appendChild(buildSelect(categories, value));
-          } else if (index === 3) {
-            cell.appendChild(buildSelect(criticality, value));
-          } else if (index === 10) {
-            cell.appendChild(buildSelect(statuses, value));
-          } else {
-            const input = document.createElement("input");
-            input.value = value;
-            cell.appendChild(input);
-          }
-          row.appendChild(cell);
-        });
+          values.forEach((value, index) => {
+            const cell = document.createElement("td");
+            if (index === 2) {
+              cell.appendChild(buildSelect(categories, value));
+            } else if (index === 3) {
+              cell.appendChild(buildSelect(criticality, value));
+            } else if (index === 10) {
+              cell.appendChild(buildSelect(statuses, value));
+            } else {
+              const input = document.createElement("input");
+              input.value = value;
+              cell.appendChild(input);
+            }
+            row.appendChild(cell);
+          });
 
-        tableBody.appendChild(row);
-        updateCounters();
-      }
+          tableBody.appendChild(row);
+          updateCounters();
+        }
 
-      function getRowValues(row) {
-        return Array.from(row.children).map((cell, index) => {
-          const field = cell.querySelector("input, select");
-          return field ? field.value : "";
-        });
-      }
+        function getRowValues(row) {
+          return Array.from(row.children).map((cell, index) => {
+            const field = cell.querySelector("input, select");
+            return field ? field.value : "";
+          });
+        }
 
-      function exportCsv() {
-        const rows = Array.from(tableBody.children);
-        const headers = Array.from(document.querySelectorAll("thead th")).map((th) => th.textContent);
-        const csvLines = [headers.join(";")];
-        rows.forEach((row) => {
-          csvLines.push(getRowValues(row).map((value) => `"${value.replace(/"/g, '""')}"`).join(";"));
-        });
-        const blob = new Blob([csvLines.join("\n")], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "inventario-ti-iatf.csv";
-        link.click();
-        URL.revokeObjectURL(url);
-      }
+        function exportCsv() {
+          const rows = Array.from(tableBody.children);
+          const headers = Array.from(document.querySelectorAll("thead th")).map((th) => th.textContent);
+          const csvLines = [headers.join(";")];
+          rows.forEach((row) => {
+            csvLines.push(getRowValues(row).map((value) => `"${value.replace(/"/g, '""')}"`).join(";"));
+          });
+          const blob = new Blob([csvLines.join("\n")], { type: "text/csv;charset=utf-8;" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "inventario-ti-iatf.csv";
+          link.click();
+          URL.revokeObjectURL(url);
+        }
 
-      function exportXlsx() {
-        const headers = Array.from(document.querySelectorAll("thead th")).map((th) => th.textContent);
-        const rows = Array.from(tableBody.children).map((row) => getRowValues(row));
-        const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "InventarioTI");
-        XLSX.writeFile(workbook, "inventario-ti-iatf.xlsx");
-      }
+        function exportXlsx() {
+          const headers = Array.from(document.querySelectorAll("thead th")).map((th) => th.textContent);
+          const rows = Array.from(tableBody.children).map((row) => getRowValues(row));
+          const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+          const workbook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(workbook, worksheet, "InventarioTI");
+          XLSX.writeFile(workbook, "inventario-ti-iatf.xlsx");
+        }
 
-      function clearTable() {
-        tableBody.innerHTML = "";
-      }
+        function clearTable() {
+          tableBody.innerHTML = "";
+        }
 
-      function importFromCsv(text) {
-        const lines = text.trim().split(/\r?\n/);
-        if (lines.length === 0) return;
-        const dataLines = lines.slice(1);
-        clearTable();
-        dataLines.forEach((line) => {
-          const values = line
-            .split(";")
-            .map((value) => value.replace(/^"|"$/g, "").replace(/""/g, '"'));
-          if (values.length > 0 && values.some((v) => v.trim() !== "")) {
-            const rowValues = defaultRow().map((fallback, idx) => values[idx] ?? fallback);
+        function importFromCsv(text) {
+          const lines = text.trim().split(/\r?\n/);
+          if (lines.length === 0) return;
+          const dataLines = lines.slice(1);
+          clearTable();
+          dataLines.forEach((line) => {
+            const values = line
+              .split(";")
+              .map((value) => value.replace(/^"|"$/g, "").replace(/""/g, '"'));
+            if (values.length > 0 && values.some((v) => v.trim() !== "")) {
+              const rowValues = defaultRow().map((fallback, idx) => values[idx] ?? fallback);
+              addRow(rowValues);
+            }
+          });
+        }
+
+        function importFromXlsx(arrayBuffer) {
+          const workbook = XLSX.read(arrayBuffer, { type: "array" });
+          const sheetName = workbook.SheetNames[0];
+          const sheet = workbook.Sheets[sheetName];
+          const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+          const rows = data.slice(1);
+          clearTable();
+          rows.forEach((row) => {
+            if (row.length === 0) return;
+            const rowValues = defaultRow().map((fallback, idx) => row[idx] ?? fallback);
             addRow(rowValues);
+          });
+        }
+
+        function downloadTemplate() {
+          if (tableBody.children.length === 0) {
+            addRow();
           }
+          exportCsv();
+        }
+
+        function updateCounters() {
+          const rows = Array.from(tableBody.children);
+          const total = rows.length;
+          const active = rows.filter((row) => row.children[10].querySelector("select").value === "Ativo").length;
+          const critical = rows.filter((row) => row.children[3].querySelector("select").value === "Crítica").length;
+          const review = rows.filter((row) => {
+            const value = row.children[9].querySelector("input").value;
+            if (!value) return false;
+            const reviewDate = new Date(value);
+            if (Number.isNaN(reviewDate.getTime())) return false;
+            const now = new Date();
+            const diff = now - reviewDate;
+            const days = diff / (1000 * 60 * 60 * 24);
+            return days >= 365;
+          }).length;
+
+          counters.total.textContent = total;
+          counters.active.textContent = active;
+          counters.critical.textContent = critical;
+          counters.review.textContent = review;
+        }
+
+        addRowBtn.addEventListener("click", () => addRow());
+        duplicateRowBtn.addEventListener("click", () => {
+          if (!selectedRow) return;
+          addRow(getRowValues(selectedRow));
         });
-      }
-
-      function importFromXlsx(arrayBuffer) {
-        const workbook = XLSX.read(arrayBuffer, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-        const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-        const rows = data.slice(1);
-        clearTable();
-        rows.forEach((row) => {
-          if (row.length === 0) return;
-          const rowValues = defaultRow().map((fallback, idx) => row[idx] ?? fallback);
-          addRow(rowValues);
+        removeRowBtn.addEventListener("click", () => {
+          if (!selectedRow) return;
+          selectedRow.remove();
+          selectedRow = null;
+          updateCounters();
         });
+        downloadBtn.addEventListener("click", downloadTemplate);
+        importBtn.addEventListener("click", () => filePicker.click());
+        filePicker.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (!file) return;
+          const extension = file.name.toLowerCase().split(".").pop();
+          if (extension === "csv") {
+            const reader = new FileReader();
+            reader.onload = () => importFromCsv(reader.result);
+            reader.readAsText(file, "utf-8");
+          } else if (extension === "xlsx") {
+            const reader = new FileReader();
+            reader.onload = () => importFromXlsx(reader.result);
+            reader.readAsArrayBuffer(file);
+          }
+          filePicker.value = "";
+        });
+
+        launchBtn.addEventListener("click", () => {
+          if (window.app && typeof window.app.runExecutable === "function") {
+            window.app.runExecutable();
+            openImportModal();
+            return;
+          }
+          alert(
+            "Este botão funciona no aplicativo Electron. No navegador, não é possível executar um .exe local."
+          );
+        });
+
+        tableBody.addEventListener("input", updateCounters);
+        addRow();
       }
-
-      function downloadTemplate() {
-        if (tableBody.children.length === 0) {
-          addRow();
-        }
-        exportCsv();
-      }
-
-      function updateCounters() {
-        const rows = Array.from(tableBody.children);
-        const total = rows.length;
-        const active = rows.filter((row) => row.children[10].querySelector("select").value === "Ativo").length;
-        const critical = rows.filter((row) => row.children[3].querySelector("select").value === "Crítica").length;
-        const review = rows.filter((row) => {
-          const value = row.children[9].querySelector("input").value;
-          if (!value) return false;
-          const reviewDate = new Date(value);
-          if (Number.isNaN(reviewDate.getTime())) return false;
-          const now = new Date();
-          const diff = now - reviewDate;
-          const days = diff / (1000 * 60 * 60 * 24);
-          return days >= 365;
-        }).length;
-
-        counters.total.textContent = total;
-        counters.active.textContent = active;
-        counters.critical.textContent = critical;
-        counters.review.textContent = review;
-      }
-
-      addRowBtn.addEventListener("click", () => addRow());
-      duplicateRowBtn.addEventListener("click", () => {
-        if (!selectedRow) return;
-        addRow(getRowValues(selectedRow));
-      });
-      removeRowBtn.addEventListener("click", () => {
-        if (!selectedRow) return;
-        selectedRow.remove();
-        selectedRow = null;
-        updateCounters();
-      });
-      downloadBtn.addEventListener("click", downloadTemplate);
-      importBtn.addEventListener("click", () => filePicker.click());
-      filePicker.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
-        const extension = file.name.toLowerCase().split(".").pop();
-        if (extension === "csv") {
-          const reader = new FileReader();
-          reader.onload = () => importFromCsv(reader.result);
-          reader.readAsText(file, "utf-8");
-        } else if (extension === "xlsx") {
-          const reader = new FileReader();
-          reader.onload = () => importFromXlsx(reader.result);
-          reader.readAsArrayBuffer(file);
-        }
-        filePicker.value = "";
-      });
-
-      launchBtn.addEventListener("click", () => {
-        if (window.app && typeof window.app.runExecutable === "function") {
-          window.app.runExecutable();
-          openImportModal();
-          return;
-        }
-        alert(
-          "Este botão funciona no aplicativo Electron. No navegador, não é possível executar um .exe local."
-        );
-      });
 
       function openImportModal() {
         importModal.style.display = "block";
@@ -513,9 +708,58 @@
 
       cancelImportBtn.addEventListener("click", closeImportModal);
 
-      tableBody.addEventListener("input", updateCounters);
+      const reportMachineName = document.querySelector("#reportMachineName");
+      const reportGeneratedAt = document.querySelector("#reportGeneratedAt");
+      const reportHostname = document.querySelector("#reportHostname");
+      const refreshReportDateBtn = document.querySelector("#refreshReportDate");
+      const addNetworkRowBtn = document.querySelector("#addNetworkRow");
+      const networkTableBody = document.querySelector("#networkTable tbody");
 
-      addRow();
+      function formatDateTime(date) {
+        return new Intl.DateTimeFormat("pt-BR", {
+          dateStyle: "short",
+          timeStyle: "medium",
+        }).format(date);
+      }
+
+      function refreshReportDate() {
+        reportGeneratedAt.textContent = formatDateTime(new Date());
+      }
+
+      function syncReportHostname() {
+        reportMachineName.textContent = reportHostname.value.trim() || "SEM-HOST";
+      }
+
+      function addNetworkRow(values = ["", "", "", "", "", "Conforme", ""]) {
+        const row = document.createElement("tr");
+        values.forEach((value, index) => {
+          const cell = document.createElement("td");
+          if (index === 5) {
+            const select = document.createElement("select");
+            ["Conforme", "Não Conforme", "NA"].forEach((option) => {
+              const opt = document.createElement("option");
+              opt.value = option;
+              opt.textContent = option;
+              if (option === value) opt.selected = true;
+              select.appendChild(opt);
+            });
+            cell.appendChild(select);
+          } else {
+            const input = document.createElement("input");
+            input.value = value;
+            cell.appendChild(input);
+          }
+          row.appendChild(cell);
+        });
+        networkTableBody.appendChild(row);
+      }
+
+      reportHostname.addEventListener("input", syncReportHostname);
+      refreshReportDateBtn.addEventListener("click", refreshReportDate);
+      addNetworkRowBtn.addEventListener("click", () => addNetworkRow());
+
+      refreshReportDate();
+      syncReportHostname();
     </script>
   </body>
 </html>
