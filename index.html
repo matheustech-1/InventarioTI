@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Black Barber Shop - Barbearia especializada em cabelo afro. Venha ser Black Premium!">
+    <meta name="theme-color" content="#000000">
+    <title>Black Barber Shop - Barbearia Premium</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar flutuante -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <span class="logo-icon">✂️</span>
+                <span class="logo-text">BLACK BARBER</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link" data-section="home">Home</a></li>
+                <li><a href="#services" class="nav-link" data-section="services">Serviços</a></li>
+                <li><a href="#pricing" class="nav-link" data-section="pricing">Planos</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">Sobre</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contato</a></li>
+                <li><a href="marcar.html" class="btn-primary">Agendar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title fade-in-up">Bem-vindo à <span class="highlight">BLACK BARBER</span></h1>
+            <p class="hero-subtitle fade-in-up" style="animation-delay: 0.2s;">Barbearia especializada em cabelo afro</p>
+            <p class="hero-tagline fade-in-up" style="animation-delay: 0.4s;">Venha ser <span class="premium-text">BLACK PREMIUM</span>! 🪮</p>
+            <div class="hero-buttons fade-in-up" style="animation-delay: 0.6s;">
+                <a href="marcar.html" class="btn-primary btn-lg">Agendar Agora</a>
+                <a href="#services" class="btn-secondary btn-lg">Conheça Nossos Serviços</a>
+            </div>
+        </div>
+        <div class="hero-animation">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+        </div>
+    </section>
+
+
+    <!-- Seção de Serviços -->
+    <section id="services" class="services fade-in-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Nossos Serviços</h2>
+                <p class="section-subtitle">Cuidado especializado para seu estilo único</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card hover-lift">
+                    <div class="service-icon">✂️</div>
+                    <h3>Corte de Cabelo</h3>
+                    <p>Cortes modernos e estilosos especializados em cabelo afro, com design e precisão.</p>
+                    <a href="services.html" class="card-link">Saiba Mais →</a>
+                </div>
+                <div class="service-card hover-lift">
+                    <div class="service-icon">💈</div>
+                    <h3>Barba Premium</h3>
+                    <p>Cuidados especiais e tratamentos exclusivos para deixar sua barba impecável.</p>
+                    <a href="services.html" class="card-link">Saiba Mais →</a>
+                </div>
+                <div class="service-card hover-lift">
+                    <div class="service-icon">💇‍♂️</div>
+                    <h3>Tratamento Capilar</h3>
+                    <p>Revitalize seus cabelos com nossos tratamentos profissionais e produtos premium.</p>
+                    <a href="services.html" class="card-link">Saiba Mais →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Seção de Planos/Pricing -->
+    <section id="pricing" class="pricing fade-in-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Planos & Cortes</h2>
+                <p class="section-subtitle">Escolha o plano perfeito para você</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-badge">Básico</div>
+                    <h3>Corte Classico</h3>
+                    <div class="price">
+                        <span class="currency">R$</span>
+                        <span class="amount">40</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 1 Corte de Cabelo</li>
+                        <li>✓ Ambiente Premium</li>
+                    </ul>
+                    <button class="btn-secondary">Escolher Corte</button>
+                </div>
+                <div class="pricing-card featured hover-lift">
+                    <div class="pricing-badge popular">Mais Popular</div>
+                    <h3>Corte & Barba</h3>
+                    <div class="price">
+                        <span class="currency">R$</span>
+                        <span class="amount">50</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Tratamento Capilar </li>
+                        <li>✓ Barba Premium</li>
+                        <li>✓ Produtos Exclusivos</li>
+                    </ul>
+                    <button class="btn-primary">Escolher Plano</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-badge">Exclusivo</div>
+                    <h3>Plano Mensal</h3>
+                    <div class="price">
+                        <span class="currency">R$</span>
+                        <span class="amount">117</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Atendimento Prioritário</li>
+                        <li>✓ Cortes Ilimitados</li>
+                        <li>✓ Skincare Premium</li>
+                        <li>✓ Acessos Exclusivos</li>
+                    </ul>
+                    <button class="btn-secondary">Escolher Plano</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Seção Sobre -->
+    <section id="about" class="about fade-in-section">
+        <div class="section-container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Sobre Nós</h2>
+                    <p>A <strong>BLACK BARBER SHOP</strong> é uma barbearia especializada em cabelo afro, comprometida em oferecer os melhores serviços e produtos premium do mercado.</p>
+                    <p>Nossos profissionais são altamente treinados e usam as técnicas mais modernas para garantir que você saia daqui se sentindo <strong>BLACK PREMIUM</strong>!</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Clientes Satisfeitos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">2+</span>
+                            <span class="stat-label">Anos de Experiência</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Suporte</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-hours">
+                    <h3>Horários de Funcionamento</h3>
+                    <div class="hours-list">
+                        <div class="hours-item">
+                            <span class="day">Segunda a Sexta</span>
+                            <span class="time">09:30 - 18:30</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="day">Sábado</span>
+                            <span class="time">09:30 - 18:30</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="day">Domingo</span>
+                            <span class="time">Fechado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Seção de Contato/CTA -->
+    <section id="contact" class="contact fade-in-section">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Entre em Contato</h2>
+                <p class="section-subtitle">Siga-nos nas redes sociais</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-card hover-lift">
+                    <div class="contact-icon">📱</div>
+                    <h3>Instagram</h3>
+                    <p>Acompanhe nossos trabalhos e promoções</p>
+                    <a href="https://www.instagram.com/black.barbershop_" target="_blank" rel="noopener" class="btn-primary">Visitar</a>
+                </div>
+                <div class="contact-card hover-lift">
+  <div class="contact-icon">📍</div>
+  <h3>Localização</h3>
+  <p>Rua Antonio Doll de Moraes, 149 - Diadema, SP</p>
+  <a href="https://maps.app.goo.gl/x1BT6gwhuXgLx1Vv6" target="_blank" rel="noopener" class="btn-primary">Ver no Mapa</a>
+</div>
+                <div class="contact-card hover-lift">
+                    <div class="contact-icon">☎️</div>
+                    <h3>WhatsApp</h3>
+                    <p>Envie uma mensagem direta</p>
+                    <a href="https://wa.me/5511989389074" target="_blank" rel="noopener" class="btn-primary">Conversar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BLACK BARBER SHOP</h4>
+                <p>Barbearia especializada em cabelo afro com atendimento premium.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links Rápidos</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="marcar.html">Agendar</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Redes Sociais</h4>
+                <div class="social-links">
+                    <a href="https://instagram.com/black.barbershop_" aria-label="Instagram">📱</a>
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="WhatsApp">💬</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BLACK BARBER SHOP. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <form class="booking-form" id="bookingForm" action="https://formspree.io/f/SEU_CODIGO_AQUI" method="POST"></form>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Voltar ao topo">↑</button>
+
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>
+
